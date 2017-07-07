@@ -13,11 +13,11 @@ class MySQLDatabase{
 	public function open_connection(){
 		$this ->connection = mysqli_connect(DB_SERVER,DB_USER,DB_PASS);
 		if(!$this->connection){
-			die("Database connection failed ".mysqli_error());
+			die("Database connection failed ".mysqli_connect_error());
 		}else{
 			$db_select = mysqli_select_db($this->connection,DB_NAME);
 			if(!$db_select){
-				die("Database selection failed: ".mysqli_error());
+				die("Database selection failed: ".mysqli_connect_error());
 			}
 		}
 	}
@@ -35,7 +35,7 @@ class MySQLDatabase{
 
 		if($new_enough_php){
 			if($magic_quotes_active){$value = stripslashes($value);}
-			$value =mysqli_real_escape_string($value);
+			$value =mysqli_real_escape_string($this->connection,$value);
 		}else{
 			if(!$magic_quotes_active){$value = addslashes($value);}
 		}
