@@ -6,6 +6,8 @@ if(isset($database)){echo "true";}else{echo "false";}
 
 echo "<br/>";
 
-echo "Hello the project has began";
+$message= "Hello the project's has began";
+
+echo $database->mysql_prep($message);
 
 ?>
