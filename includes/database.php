@@ -29,7 +29,7 @@ class MySQLDatabase{
 		}
 	}
 
-	public function mysql_prep($value){
+	public function escape_value($value){
 		$magic_quotes_active = get_magic_quotes_gpc();
 		$new_enough_php = function_exists('mysqli_real_escape_string');
 
@@ -57,6 +57,19 @@ class MySQLDatabase{
 			die("Database query failed: ". mysqli_connect_error());
 		}
 	}
+
+	public function num_rows($result_set){
+	    return mysqli_num_rows($result_set);
+    }
+
+    public function inserted_id(){
+	    //get the last id inserted over the current db connection.
+        return mysqli_insert_id($this->connection);
+    }
+
+    public function affected_rows(){
+        return mysqli_affected_rows($this->connection);
+    }
 
 
 }
