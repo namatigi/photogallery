@@ -17,9 +17,17 @@
 
 
 
-    $sql = "INSERT INTO users (id, username, password, first_name, last_name) ";
-    $sql .= "VALUES(4,'mvanda','mvanda2017','Junus','Mvanda') ";
-    $result = $database->query($sql);
+//    $sql = "INSERT INTO users (id, username, password, first_name, last_name) ";
+//    $sql .= "VALUES(4,'mvanda','mvanda2017','Junus','Mvanda') ";
+//    $result = $database->query($sql);
+
+    $sql = "SELECT * FROM users WHERE id =1";
+
+    $result_set = $database->query($sql);
+
+    $found_user = mysqli_fetch_array($result_set);
+
+    echo $found_user['username'];
 
 
 
