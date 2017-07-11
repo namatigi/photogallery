@@ -1,9 +1,10 @@
 <?php
-
+require_once ("../../includes/session.php");
 require_once ("../../includes/functions.php");
 require_once("../../includes/database.php");
 require_once ("../../includes/user.php");
-require_once ("../../includes/session.php");
+
+
 
 date_default_timezone_set('UTC');
 
@@ -21,7 +22,7 @@ if(isset($_POST['submit'])){
     $password = trim($_POST['password']);
 
 
-
+    $found_user = User::authenticate($username,$password);
 
     if($found_user){
         $session->login($found_user);
@@ -33,8 +34,8 @@ if(isset($_POST['submit'])){
     $username = "";
     $password = "";
 }
-
 ?>
+
 <html>
     <head>
         <title>Login page</title>
@@ -65,7 +66,7 @@ if(isset($_POST['submit'])){
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="submit" value="submit"/>
+                        <input type="submit" name="submit" value="Login"/>
                     </td>
                 </tr>
             </table>
@@ -75,4 +76,6 @@ if(isset($_POST['submit'])){
     <div id="footer">Copyright <?php  echo date("Y",time());?>, Leonard Mangu</div>
     </body>
 </html>
+
+
 <?php if(isset($database)){$database->close_connection();} ?>

@@ -13,7 +13,7 @@ if(!$session->is_logged_in()){redirect_to('login.php');}
 <html>
     <head>
        <title>Photogallery</title>
-        <link href="../stylesheet/main.css" media="all" rel="stylesheet" type="text/css"/>
+        <link href="../stylesheets/main.css" media="all" rel="stylesheet" type="text/css"/>
     </head>
     <body>
     <div id="header">
