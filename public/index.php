@@ -1,6 +1,7 @@
 <html>
     <head>
        <title>Photogallery</title>
+        <link rel="stylesheets/main.css" type="text/css" media="all"
     </head>
     <body>
     <?php
