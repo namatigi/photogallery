@@ -50,7 +50,7 @@ class MySQLDatabase{
 
 	private function confirm_query($result){
 		if(!$result){
-			die("Database query failed: ".mysqli_error());
+			die("Database query failed: ". mysqli_connect_error());
 		}
 	}
 
