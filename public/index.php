@@ -5,8 +5,8 @@
     <body>
     <?php
 
+    require_once ("../includes/functions.php");
     require_once("../includes/database.php");
-
     require_once ("../includes/user.php");
 
 //    if(isset($database)){echo "true";}else{echo "false";}
@@ -30,6 +30,7 @@
 //    $found_user = $database->fetch_array($result_set);
 //
 //    echo $found_user['username'];
+
 
     $user = User::find_by_id(1);
 

@@ -5,7 +5,9 @@
  * Date: 11/07/2017
  * Time: 18:29
  */
+//require_once ('functions.php');
 require_once ('database.php');
+
 
 class User {
 
