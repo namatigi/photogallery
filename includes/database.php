@@ -42,6 +42,10 @@ class MySQLDatabase{
 		return $value;
 	}
 
+	public function fetch_array($result){
+	    return mysqli_fetch_array($result);
+    }
+
 	public function query($sql){
 		$result = mysqli_query($this->connection,$sql);
 		$this->confirm_query($result);
