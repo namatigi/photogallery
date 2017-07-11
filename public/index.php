@@ -13,7 +13,7 @@
 
     $message= "Hello the project's has began<br/>";
 
-    echo $database->mysql_prep($message);
+    echo $database->escape_value($message);
 
 
 
@@ -25,7 +25,7 @@
 
     $result_set = $database->query($sql);
 
-    $found_user = mysqli_fetch_array($result_set);
+    $found_user = $database->fetch_array($result_set);
 
     echo $found_user['username'];
 
