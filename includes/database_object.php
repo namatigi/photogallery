@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: xnet1872
- * Date: 12/07/2017
- * Time: 08:44
- */
 require_once (LIB_PATH.DS.'database.php');
 
 class DatabaseObject{
