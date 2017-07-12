@@ -16,7 +16,7 @@ a{color:#8D0D19;}
 #header{
 	height:70px;text-align:left;background:#1A446C;color:#D4E6FA;}
 
-#header h1{padding:1em;}
+#header h1{padding:1em;margin:0px;}
 
 #main{min-height: 600px;width:100%;background:#eee4b9;padding:2em;}
 

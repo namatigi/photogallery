@@ -1,10 +1,10 @@
 <?php
-require_once ("../../includes/session.php");
-require_once ("../../includes/functions.php");
-require_once("../../includes/database.php");
-require_once ("../../includes/user.php");
+//require_once ("../../includes/session.php");
+//require_once ("../../includes/functions.php");
+//require_once("../../includes/database.php");
+//require_once ("../../includes/user.php");
 
-
+require_once ("../../includes/initialize.php");
 
 date_default_timezone_set('UTC');
 
