@@ -9,14 +9,14 @@ class DatabaseObject{
 
     public static function find_all(){
         global $database;
-//        $result_set = $database->query("SELECT * FROM users");
+        //        $result_set = $database->query("SELECT * FROM users");
         return static::find_by_sql("SELECT * FROM ".self::$table_name);
 
     }
 
     public static function find_by_id($id=0){
         global $database;
-//      $result_set = $database->query("SELECT * FROM users WHERE id={$id}");
+        //      $result_set = $database->query("SELECT * FROM users WHERE id={$id}");
         $result_array= static::find_by_sql("SELECT * FROM ".self::$table_name. " WHERE id={$id} LIMIT 1");
 
         return !empty($result_array)?array_shift($result_array):false;
@@ -37,13 +37,13 @@ class DatabaseObject{
         //simple, long form.
         $class_name = get_called_class();
         $object = new $class_name;
-//        $object = new self();
-//        $object->id= $record['id'];
-//        $object->username=$record['username'];
-//        $object->password=$record['password'];
-//        $object->first_name=$record['first_name'];
-//        $object->last_name=$record['last_name'];
-//        return $object;
+        //        $object = new self();
+        //        $object->id= $record['id'];
+        //        $object->username=$record['username'];
+        //        $object->password=$record['password'];
+        //        $object->first_name=$record['first_name'];
+        //        $object->last_name=$record['last_name'];
+        //        return $object;
 
         foreach ($record as $attribute=>$value){
             if($object->has_attribute($attribute)){
@@ -55,7 +55,7 @@ class DatabaseObject{
     }
 
     protected function attributes(){
-//        return get_object_vars($this);
+      //        return get_object_vars($this);
 
         $attributes =array();
         foreach (self::$db_fields as $field){
@@ -67,7 +67,7 @@ class DatabaseObject{
     }
 
     private function has_attribute($attribute){
-//        $object_vars = get_object_vars($this);
+      //        $object_vars = get_object_vars($this);
 
           $object_vars = static::attributes();
 

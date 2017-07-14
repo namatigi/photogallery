@@ -32,15 +32,18 @@ if(!$session->is_logged_in()){redirect_to('login.php');}
 //
 //$user ->save();
 
-$user = User::find_by_id(12);
+$user = User::find_by_id(2);
 
-$user->delete();
+$user->password = "john2016";
 
-echo $user->full_name();
+$user->update1();
+
+// $user->update();
+
+// $user->delete();
+
+// echo $user->full_name();
 
 
 ?>
 <?php include_layout_template('admin_footer.php');?>
-
-
-
