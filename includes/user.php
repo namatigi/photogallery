@@ -131,7 +131,7 @@ class User extends DatabaseObject {
         $database->query($sql);
         return($database->affected_rows()==1)? true:false;
     }
-    
+
 }
 
 
