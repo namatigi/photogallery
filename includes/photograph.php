@@ -7,7 +7,7 @@ class Photograph extends DatabaseObject{
   protected static $table_name="photographs";
   // protected static $db_fields = array('id','filename','type','size','caption');
 
-  public $id=1;
+  public $id;
   public $filename;
   public $type;
   public $size;
@@ -54,7 +54,7 @@ class Photograph extends DatabaseObject{
       //A new record won't have an id yet.
       if(isset($this->id)){
         //Just to update the caption.
-        $this->update();
+        $this->update1();
       }else{
         //make sure there are no erros.
         //Can't save if there are pre_existing errors.
@@ -105,7 +105,6 @@ class Photograph extends DatabaseObject{
 
   public function create1(){
       global $database;
-  
       $attributes = $this->sanitized_attributes();
 
       $sql = "INSERT INTO ".self::$table_name. " (";

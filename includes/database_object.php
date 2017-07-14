@@ -5,8 +5,8 @@ require_once (LIB_PATH.DS.'database.php');
 class DatabaseObject{
 
     protected static $table_name='users';
-    // protected static $db_fields = array('id','username','password','first_name','last_name',);
-    protected static $db_fields = array('id','filename','type','size','caption');
+    protected static $db_fields = array('id','username','password','first_name','last_name','filename','type','size','caption');
+    // protected static $db_fields = array('id','filename','type','size','caption');
 
     public static function find_all(){
         global $database;
