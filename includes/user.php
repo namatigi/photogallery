@@ -13,6 +13,7 @@ require_once (LIB_PATH.DS.'database_object.php');
 class User extends DatabaseObject {
 
     protected static $table_name='users';
+
     public $id;
     public $username;
     public $password;
@@ -45,6 +46,7 @@ class User extends DatabaseObject {
         }
     }
 
+
     public function  save(){
         //A new record won't have an id yet
         return isset($this->id)?$this->update() : $this->create();
@@ -53,7 +55,7 @@ class User extends DatabaseObject {
     public function create(){
         global $database;
 
-        $sql = "INSERT INTO users(";
+        $sql = "INSERT INTO" .self::$table_name."(";
         $sql .="username,password,first_name,last_name ";
         $sql .=") VALUES( '";
         $sql .=$database->escape_value($this->username)."', '";
@@ -72,7 +74,7 @@ class User extends DatabaseObject {
     public function update(){
         global $database;
 
-        $sql = "UPDATE users SET ";
+        $sql = "UPDATE ".self::$table_name." SET ";
         $sql .="username='".$database->escape_value($this->username)."', ";
         $sql .="password='".$database->escape_value($this->password)."', ";
         $sql .="first_name='".$database->escape_value($this->first_name)."', ";
@@ -86,12 +88,51 @@ class User extends DatabaseObject {
     public function delete(){
         global $database;
 
-        $sql ="DELETE FROM users ";
+        $sql ="DELETE FROM ".self::$table_name." ";
         $sql .="WHERE id= ".$database->escape_value($this->id);
         $sql .= " LIMIT 1";
         $database->query($sql);
         return ($database->affected_rows()==1)? true:false;
     }
+
+    public function create1(){
+        global $database;
+
+        $attributes = $this->sanitized_attributes();
+
+        $sql = "INSERT INTO ".self::$table_name. " (";
+        $sql .=join(", ",array_keys($attributes));
+        $sql .=") VALUES ('";
+        $sql .=join("' , '",array_values($attributes));
+        $sql .="')";
+        if($database->query($sql)){
+            $this->id=$database->inserted_id();
+            return true;
+        }else{
+            return false;
+        }
+
+
+
+
+    }
+
+    public function update1(){
+        global $database;
+        $attributes =$this->sanitized_attributes();
+        $attribute_pairs = array();
+        foreach ($attributes as $key=>$value){
+            $attribute_pairs[] = "{$key} = '{$value}'";
+        }
+
+        $sql = "UPDATE ".self::$table_name. " SET ";
+        $sql .=join(", ",$attribute_pairs);
+        $sql .=" WHERE id=".$database->escape_value($this->id);
+        $database->query($sql);
+        return($database->affected_rows()==1)? true:false;
+    }
+
+  
 
 
 }

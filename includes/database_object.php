@@ -5,6 +5,7 @@ require_once (LIB_PATH.DS.'database.php');
 class DatabaseObject{
 
     protected static $table_name='users';
+    protected static $db_fields = array('id','username','password','first_name','last_name');
 
     public static function find_all(){
         global $database;
@@ -53,9 +54,40 @@ class DatabaseObject{
 
     }
 
+    protected function attributes(){
+//        return get_object_vars($this);
+
+        $attributes =array();
+        foreach (self::$db_fields as $field){
+            if(property_exists($this,$field)){
+                $attributes[$field]=$this->$field;
+            }
+        }
+        return $attributes;
+    }
+
     private function has_attribute($attribute){
-        $object_vars = get_object_vars($this);
+//        $object_vars = get_object_vars($this);
+
+          $object_vars = static::attributes();
 
         return array_key_exists($attribute,$object_vars);
     }
+
+    protected function sanitized_attributes(){
+        global $database;
+
+        $clean_attributes = array();
+
+        foreach ($this->attributes() as $key => $value){
+            $clean_attributes[$key]=$database->escape_value($value);
+        }
+
+        return $clean_attributes;
+    }
+
+
+
+
+
 }

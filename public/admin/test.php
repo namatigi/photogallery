@@ -26,15 +26,17 @@ if(!$session->is_logged_in()){redirect_to('login.php');}
 //    $user->last_name="Mangu";
 //    $user->create();
 
-//$user = User::find_by_id(3);
+//$user = User::find_by_id(9);
 //
 //$user->password ="12345ABCD";
 //
 //$user ->save();
 
-$user = User::find_by_id(4);
+$user = User::find_by_id(12);
 
 $user->delete();
+
+echo $user->full_name();
 
 
 ?>
