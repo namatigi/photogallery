@@ -1,12 +1,13 @@
 <?php
 require_once(LIB_PATH.DS.'database.php');
+require_once(LIB_PATH.DS.'database_object.php');
 
 class Photograph extends DatabaseObject{
 
   protected static $table_name="photographs";
-  protected static $db_fields = array('id','filename','type','size','caption');
+  // protected static $db_fields = array('id','filename','type','size','caption');
 
-  public $id;
+  public $id=1;
   public $filename;
   public $type;
   public $size;
@@ -32,7 +33,7 @@ class Photograph extends DatabaseObject{
 
   public function attach_file($file){
 
-      if(!$file || empty($file) || !is_array($file){
+      if(!$file || empty($file) || !is_array($file)){
         $this->errors[]="No file was uploaded.";
         return false;
       }elseif($file['error']!=0){
@@ -49,7 +50,7 @@ class Photograph extends DatabaseObject{
 
     }
 
-    public function save(){
+  public function save(){
       //A new record won't have an id yet.
       if(isset($this->id)){
         //Just to update the caption.
@@ -60,25 +61,25 @@ class Photograph extends DatabaseObject{
         if(!empty($this->errors)){return false;}
 
         //make sure the caption is not long for the DB.
-        if(strlen($this->caption)<=255){
-          this->errors[] = "The caption can only be 255 characters long";
+        if(strlen($this->caption)>=255){
+          $this->errors[] = "The caption can only be 255 characters long";
           return false;
         }
         //make sure the filename and temp_dir are set.
         if(empty($this->filename)||empty($this->temp_path)){
-          $this->errors[] = 'The file lcoation was not available';
+          $this->errors[] = 'The file location was not available';
           return false;
         }
 
-        $target_path = SITE_ROOT.DS.'public'.DS.$this->upload_dir .DS. $this->filename;
+        $target_path = SITE_ROOT.DS.'public'.DS.$this->upload_dir.DS.$this->filename;
 
         if(file_exists($target_path)){
-          $this->errors[] = "The file {$this->filename} alread exists."
+          $this->errors[] = "The file {$this->filename} alread exists.";
           return false;
         }
 
         if(move_uploaded_file($this->temp_path,$target_path)){
-          if($this->create()){
+          if($this->create1()){
               unset($this->temp_path);
               return true;
           }
@@ -92,72 +93,6 @@ class Photograph extends DatabaseObject{
       }
     }
 
-
-
-
-  public static function authenticate($username="",$password=""){
-      global $database;
-
-      $username = $database->escape_value($username);
-      $password = $database->escape_value($password);
-
-      $sql = "SELECT * FROM users ";
-      $sql .="WHERE username = '{$username}' ";
-      $sql .="AND password ='{$password}' ";
-      $sql .="LIMIT 1";
-
-      $result_array = self::find_by_sql($sql);
-
-      return !empty($result_array)?array_shift($result_array):false;
-  }
-
-  public function full_name(){
-      if(isset($this->first_name) && isset($this->last_name)){
-          return strtoupper($this->first_name . " " . $this->last_name)."<br/>";
-      }else{
-          return "";
-      }
-  }
-
-
-  // public function  save(){
-  //     //A new record won't have an id yet
-  //     return isset($this->id)?$this->update() : $this->create();
-  // }
-
-  public function create(){
-      global $database;
-
-      $sql = "INSERT INTO" .self::$table_name."(";
-      $sql .="username,password,first_name,last_name ";
-      $sql .=") VALUES( '";
-      $sql .=$database->escape_value($this->username)."', '";
-      $sql .=$database->escape_value($this->password)."' ,'";
-      $sql .=$database->escape_value($this->first_name)."', '";
-      $sql .=$database->escape_value($this->last_name). "')";
-
-      if($database->query($sql)){
-          $this->id = $database->inserted_id();
-          return true;
-      }else{
-          return false;
-      }
-  }
-
-  public function update(){
-      global $database;
-
-      $sql = "UPDATE ".self::$table_name." SET ";
-      $sql .="username='".$database->escape_value($this->username)."', ";
-      $sql .="password='".$database->escape_value($this->password)."', ";
-      $sql .="first_name='".$database->escape_value($this->first_name)."', ";
-      $sql .="last_name='".$database->escape_value($this->last_name)."'";
-      $sql .=" WHERE id =".$database->escape_value($this->id);
-
-      $database->query($sql);
-      return ($database->affected_rows()==1)?true:false;
-  }
-
   public function delete(){
       global $database;
 
@@ -170,7 +105,7 @@ class Photograph extends DatabaseObject{
 
   public function create1(){
       global $database;
-
+  
       $attributes = $this->sanitized_attributes();
 
       $sql = "INSERT INTO ".self::$table_name. " (";
@@ -184,9 +119,6 @@ class Photograph extends DatabaseObject{
       }else{
           return false;
       }
-
-
-
 
   }
 
