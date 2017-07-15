@@ -7,13 +7,13 @@
  */
 //require_once ('functions.php');
 require_once (LIB_PATH.DS.'database.php');
-require_once (LIB_PATH.DS.'database_object.php');
+// require_once (LIB_PATH.DS.'database_object.php');
 
 
-class User extends DatabaseObject {
+class User{
 
 
-    // protected static $db_fields = array('id','username','password','first_name','last_name');
+    protected static $db_fields = array('id','username','password','first_name','last_name');
 
     protected static $table_name='users';
 
@@ -28,14 +28,14 @@ class User extends DatabaseObject {
     public static function find_all(){
         global $database;
         //        $result_set = $database->query("SELECT * FROM users");
-        return $this->find_by_sql("SELECT * FROM ".self::$table_name);
+        return self::find_by_sql("SELECT * FROM ".self::$table_name);
 
     }
 
     public static function find_by_id($id=0){
         global $database;
         //      $result_set = $database->query("SELECT * FROM users WHERE id={$id}");
-        $result_array= $this->find_by_sql("SELECT * FROM ".self::$table_name. " WHERE id={$id} LIMIT 1");
+        $result_array= self::find_by_sql("SELECT * FROM ".self::$table_name. " WHERE id={$id} LIMIT 1");
 
         return !empty($result_array)?array_shift($result_array):false;
 
@@ -46,7 +46,7 @@ class User extends DatabaseObject {
         $result_set = $database->query($sql);
         $object_array = array();
         while($row=$database->fetch_array($result_set)){
-            $object_array[]=$this->instantiate($row);
+            $object_array[]=self::instantiate($row);
         }
         return $object_array;
     }
