@@ -26,7 +26,7 @@ if(!$session->is_logged_in()){redirect_to('login.php');}
 
 <h2>Photographs</h2>
 
-<table class="boardered">
+<table class="bordered">
   <tr>
     <th>Image</th>
     <th>Filename</th>
@@ -37,10 +37,10 @@ if(!$session->is_logged_in()){redirect_to('login.php');}
   </tr>
   <?php foreach ($photos as $photo): ?>
     <tr>
-      <td><img src ="../<?php echo $photo->image_path();?>" widht="100"/></td>
+      <td><img src ="../<?php echo $photo->image_path();?>" width="100"/></td>
       <td><?php  echo $photo->filename;?></td>
       <td><?php echo $photo->caption;?></td>
-      <td><?php echo $photo->size;?></td>
+      <td><?php echo $photo->size_as_text(); ?></td>
       <td><?php echo $photo->type;?></td>
     </tr>
   <?php endforeach; ?>
@@ -48,6 +48,6 @@ if(!$session->is_logged_in()){redirect_to('login.php');}
 
 </table>
 <br/>
-<a href="photo_upload.php">Upload a new photograph</a>
+<a href="photoupload.php">Upload a new photograph</a>
 
 <?php include_layout_template('admin_footer.php');?>

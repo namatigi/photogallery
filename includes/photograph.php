@@ -97,6 +97,18 @@ class Photograph extends DatabaseObject{
     return $this->upload_dir.DS.$this->filename;
   }
 
+  public function size_as_text(){
+    if($this->size <1024){
+      return "{$this->size} bytes";
+    }elseif($this->size<1048576){
+      $size_kb=round($this->size/1024);
+      return "{$size_kb} KB";
+    }else{
+      $size_mb = round($this->size/1048576,1);
+      return "{$size_mb} MB";
+    }
+  }
+
   public static function find_all(){
       global $database;
       //        $result_set = $database->query("SELECT * FROM users");
