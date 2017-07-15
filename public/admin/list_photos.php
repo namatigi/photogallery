@@ -25,7 +25,7 @@ if(!$session->is_logged_in()){redirect_to('login.php');}
 
 
 <h2>Photographs</h2>
-
+<?php echo $message; ?>
 <table class="bordered">
   <tr>
     <th>Image</th>
